@@ -10,6 +10,21 @@
       'hero.greeting': 'Hola, soy',
       'hero.desc': 'Estudiante de Ingeniería de Software apasionado por crear soluciones tecnológicas. Combino desarrollo web, diseño multimedia y soporte técnico con un enfoque proactivo.',
       'hero.cta1': 'Conectemos', 'hero.cta2': 'Ver Proyectos', 'hero.cta3': 'Descargar CV',
+      'about.tag': 'Conóceme', 'about.title': 'Sobre <span class="highlight">Mí</span>',
+      'about.p1': 'Soy <strong>Edwin de Jesús Ternera Escobar</strong>, estudiante de <strong>Ingeniería de Software</strong> en la Universidad Cooperativa de Colombia (2024-Actualidad). Mi formación combina bases sólidas en programación, soporte técnico y mantenimiento de hardware/software, complementada con experiencia en gestión de proyectos y entornos educativos tecnológicos.',
+      'about.p2': 'Mi perfil es híbrido: desarrollo <strong>web full-stack</strong> (JavaScript, Python, Node.js, MySQL) y <strong>diseño multimedia</strong> (Photoshop, Illustrator, Premiere, After Effects). Esta dualidad me permite abordar proyectos desde la lógica hasta la experiencia visual.',
+      'about.p3': 'He trabajado coordinando proyectos en la Corporación Universitaria Reformada y gestionando clases de prueba en <strong>Kodland</strong>, plataforma educativa de programación. Obtuve el <strong>2º lugar en el Rally Latinoamericano de Innovación 2023</strong> (Categoría Innovación).',
+      'about.stat1': 'Años experiencia', 'about.stat2': 'Tecnologías', 'about.stat3': 'Certificaciones', 'about.stat4': 'Premio innovación',
+      'projects.tag': 'Portafolio', 'projects.title': 'Proyectos <span class="highlight">Destacados</span>', 'projects.desc': 'Selección de trabajos que combinan desarrollo, soporte y diseño. Filtra por área y explora código y demos.',
+      'projects.filterAll': 'Todos', 'projects.filterSupport': 'Soporte', 'projects.filterDesign': 'Diseño',
+      'exp.tag': 'Trayectoria', 'exp.title': 'Experiencia <span class="highlight">Profesional</span>',
+      'exp.role1': 'Gerente de Clases de Prueba', 'exp.r1b1': 'Coordinación y gestión de clases de prueba para estudiantes interesados en programación', 'exp.r1b2': 'Acompañamiento y orientación a nuevos estudiantes en la plataforma educativa', 'exp.r1b3': 'Organización de agendas y control de asistencia a sesiones demostrativas', 'exp.r1b4': 'Resolución de dudas técnicas y operativas en clases virtuales', 'exp.r1b5': 'Seguimiento a potenciales estudiantes para fortalecer su proceso de inscripción', 'exp.r1b6': 'Comunicación efectiva con docentes y equipo académico',
+      'exp.date2': 'Ene 2023 - Dic 2023', 'exp.role2': 'Ayudante Administrativo / Auxiliar Gestión Proyectos', 'exp.company2': 'Corporación Universitaria Reformada <span class="badge">Educación</span>',
+      'exp.r2b1': 'Coordinación y seguimiento de proyectos académicos', 'exp.r2b2': 'Organización y digitalización de documentación', 'exp.r2b3': 'Elaboración de informes técnicos', 'exp.r2b4': 'Optimización de procesos administrativos',
+      'skills.title': 'Habilidades <span class="highlight">Técnicas</span>', 'skills.cat1': 'Desarrollo & Backend', 'skills.cat2': 'Frontend & Web', 'skills.cat3': 'Soporte & Sistemas', 'skills.cat4': 'Diseño & Multimedia', 'skills.cat5': 'Ofimática & Gestión', 'skills.cat6': 'Idiomas & Soft Skills',
+      'certs.tag': 'Validados', 'certs.title': 'Certificados <span class="highlight">Destacados</span>',
+      'edu.tag': 'Académica', 'edu.title': 'Formación <span class="highlight">Académica</span>',
+      'contact.tag': 'Hablemos', 'contact.title': 'Contacto', 'contact.h3': '¿Tienes un proyecto en mente?', 'contact.p': 'Estoy abierto a oportunidades de prácticas, colaboraciones o proyectos freelance. No dudes en escribirme.',
       'github.desc': 'Repositorios públicos de @Xwin-tex cargados directamente desde la API de GitHub — sin editar HTML.',
       'github.loading': 'Cargando repos…', 'github.viewAll': 'Ver todo en GitHub →', 'github.error': 'No se pudieron cargar los repos. Ver en GitHub.',
       'form.name': 'Nombre', 'form.email': 'Email', 'form.subject': 'Asunto', 'form.message': 'Mensaje',
@@ -21,6 +36,21 @@
       'hero.greeting': 'Hi, I am',
       'hero.desc': 'Software Engineering student passionate about building tech solutions. I blend web development, multimedia design and tech support with a proactive mindset.',
       'hero.cta1': "Let's connect", 'hero.cta2': 'View Projects', 'hero.cta3': 'Download CV',
+      'about.tag': 'About me', 'about.title': 'About <span class="highlight">Me</span>',
+      'about.p1': 'I am <strong>Edwin de Jesús Ternera Escobar</strong>, a <strong>Software Engineering</strong> student at Universidad Cooperativa de Colombia (2024–Present). My background combines solid foundations in programming, tech support and hardware/software maintenance, complemented by project management and educational tech experience.',
+      'about.p2': 'My profile is hybrid: <strong>full-stack web development</strong> (JavaScript, Python, Node.js, MySQL) and <strong>multimedia design</strong> (Photoshop, Illustrator, Premiere, After Effects). This duality lets me tackle projects from logic to visual experience.',
+      'about.p3': 'I coordinated projects at Corporación Universitaria Reformada and managed trial classes at <strong>Kodland</strong>, a programming education platform. I earned <strong>2nd place at the 2023 Latin American Innovation Rally</strong> (Innovation Category).',
+      'about.stat1': 'Years experience', 'about.stat2': 'Technologies', 'about.stat3': 'Certificates', 'about.stat4': 'Innovation award',
+      'projects.tag': 'Portfolio', 'projects.title': 'Featured <span class="highlight">Projects</span>', 'projects.desc': 'A selection of work blending development, support and design. Filter by area and explore code and demos.',
+      'projects.filterAll': 'All', 'projects.filterSupport': 'Support', 'projects.filterDesign': 'Design',
+      'exp.tag': 'Career', 'exp.title': 'Professional <span class="highlight">Experience</span>',
+      'exp.role1': 'Trial Class Manager', 'exp.r1b1': 'Coordination and management of trial classes for students interested in programming', 'exp.r1b2': 'Support and guidance for new students on the educational platform', 'exp.r1b3': 'Scheduling and attendance tracking for demo sessions', 'exp.r1b4': 'Resolving technical and operational doubts in virtual classes', 'exp.r1b5': 'Follow-up with prospective students to strengthen enrollment', 'exp.r1b6': 'Effective communication with teachers and academic team',
+      'exp.date2': 'Jan 2023 - Dec 2023', 'exp.role2': 'Administrative Assistant / Project Management Assistant', 'exp.company2': 'Corporación Universitaria Reformada <span class="badge">Education</span>',
+      'exp.r2b1': 'Coordination and follow-up of academic projects', 'exp.r2b2': 'Organization and digitization of documentation', 'exp.r2b3': 'Preparation of technical reports', 'exp.r2b4': 'Optimization of administrative processes',
+      'skills.title': 'Technical <span class="highlight">Skills</span>', 'skills.cat1': 'Development & Backend', 'skills.cat2': 'Frontend & Web', 'skills.cat3': 'Support & Systems', 'skills.cat4': 'Design & Multimedia', 'skills.cat5': 'Office & Management', 'skills.cat6': 'Languages & Soft Skills',
+      'certs.tag': 'Validated', 'certs.title': 'Featured <span class="highlight">Certificates</span>',
+      'edu.tag': 'Academic', 'edu.title': 'Academic <span class="highlight">Background</span>',
+      'contact.tag': "Let's talk", 'contact.title': 'Contact', 'contact.h3': 'Have a project in mind?', 'contact.p': 'I am open to internships, collaborations or freelance projects. Feel free to reach out.',
       'github.desc': 'Public repositories from @Xwin-tex loaded live from GitHub API — no HTML edits needed.',
       'github.loading': 'Loading repos…', 'github.viewAll': 'View all on GitHub →', 'github.error': 'Could not load repos. View on GitHub.',
       'form.name': 'Name', 'form.email': 'Email', 'form.subject': 'Subject', 'form.message': 'Message',
@@ -355,9 +385,13 @@
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const val = i18n[lang][key];
-        if (val) el.textContent = val;
+        if (val !== undefined) el.textContent = val;
       });
-      // restart typing
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        const val = i18n[lang][key];
+        if (val !== undefined) el.innerHTML = val;
+      });
       const el = document.getElementById('typingText');
       if (el) el.textContent = '';
     }
