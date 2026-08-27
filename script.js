@@ -3,6 +3,34 @@
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // ===== i18n dictionary =====
+  const i18n = {
+    es: {
+      'nav.home': 'Inicio', 'nav.about': 'Sobre mí', 'nav.projects': 'Proyectos', 'nav.exp': 'Experiencia', 'nav.skills': 'Habilidades', 'nav.certs': 'Certificados', 'nav.contact': 'Contacto',
+      'hero.greeting': 'Hola, soy',
+      'hero.desc': 'Estudiante de Ingeniería de Software apasionado por crear soluciones tecnológicas. Combino desarrollo web, diseño multimedia y soporte técnico con un enfoque proactivo.',
+      'hero.cta1': 'Conectemos', 'hero.cta2': 'Ver Proyectos', 'hero.cta3': 'Descargar CV',
+      'github.desc': 'Repositorios públicos de @Xwin-tex cargados directamente desde la API de GitHub — sin editar HTML.',
+      'github.loading': 'Cargando repos…', 'github.viewAll': 'Ver todo en GitHub →', 'github.error': 'No se pudieron cargar los repos. Ver en GitHub.',
+      'form.name': 'Nombre', 'form.email': 'Email', 'form.subject': 'Asunto', 'form.message': 'Mensaje',
+      typing: ['Ingeniero de Software en formación','Desarrollador Full Stack','Diseñador Multimedia','Apasionado por la tecnología'],
+      toasts: { required: 'Completa este campo', email: 'Email no válido', subject: 'Asunto muy corto (mín 5)', message: 'Mensaje muy corto (mín 10)', sending:'Enviando…', sent:'¡Mensaje enviado!', sendError:'No se pudo enviar. Intenta de nuevo.' }
+    },
+    en: {
+      'nav.home': 'Home', 'nav.about': 'About', 'nav.projects': 'Projects', 'nav.exp': 'Experience', 'nav.skills': 'Skills', 'nav.certs': 'Certificates', 'nav.contact': 'Contact',
+      'hero.greeting': 'Hi, I am',
+      'hero.desc': 'Software Engineering student passionate about building tech solutions. I blend web development, multimedia design and tech support with a proactive mindset.',
+      'hero.cta1': "Let's connect", 'hero.cta2': 'View Projects', 'hero.cta3': 'Download CV',
+      'github.desc': 'Public repositories from @Xwin-tex loaded live from GitHub API — no HTML edits needed.',
+      'github.loading': 'Loading repos…', 'github.viewAll': 'View all on GitHub →', 'github.error': 'Could not load repos. View on GitHub.',
+      'form.name': 'Name', 'form.email': 'Email', 'form.subject': 'Subject', 'form.message': 'Message',
+      typing: ['Software Engineer in training','Full Stack Developer','Multimedia Designer','Passionate about tech'],
+      toasts: { required: 'This field is required', email: 'Invalid email', subject: 'Subject too short (min 5)', message: 'Message too short (min 10)', sending:'Sending…', sent:'Message sent!', sendError:'Could not send. Try again.' }
+    }
+  };
+  let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('es') ? 'es' : 'es');
+  let typingTexts = i18n[currentLang].typing;
+
   // ===== Scroll progress bar =====
   function initScrollProgress() {
     const bar = document.createElement('div');
@@ -193,13 +221,7 @@
     }
   }
 
-  // ===== TYPING — humanized timing =====
-  const typingTexts = [
-    'Ingeniero de Software en formación',
-    'Desarrollador Full Stack',
-    'Diseñador Multimedia',
-    'Apasionado por la tecnología'
-  ];
+  // ===== TYPING — humanized timing (texts from i18n) =====
 
   function initTyping() {
     const el = document.getElementById('typingText');
@@ -300,6 +322,94 @@
         });
       });
     });
+  }
+
+  // ===== THEME TOGGLE =====
+  function initTheme() {
+    const btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    const saved = localStorage.getItem('theme');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const initial = saved || (prefersLight ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', initial);
+    document.querySelector('meta[name=\"theme-color\"]')?.setAttribute('content', initial === 'light' ? '#f8fafc' : '#0a0f1a');
+    btn.addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.querySelector('meta[name=\"theme-color\"]')?.setAttribute('content', next === 'light' ? '#f8fafc' : '#0a0f1a');
+    });
+  }
+
+  // ===== LANG TOGGLE =====
+  function initLang() {
+    const btn = document.getElementById('langToggle');
+    if (!btn) return;
+    function applyLang(lang) {
+      currentLang = lang;
+      typingTexts = i18n[lang].typing;
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+      btn.textContent = lang === 'es' ? 'EN' : 'ES';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = i18n[lang][key];
+        if (val) el.textContent = val;
+      });
+      // restart typing
+      const el = document.getElementById('typingText');
+      if (el) el.textContent = '';
+    }
+    applyLang(currentLang);
+    btn.addEventListener('click', () => {
+      applyLang(currentLang === 'es' ? 'en' : 'es');
+    });
+  }
+
+  // ===== TOAST =====
+  function toast(msg, type='success') {
+    const c = document.getElementById('toastContainer');
+    if (!c) return;
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.textContent = msg;
+    c.appendChild(t);
+    requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 320); }, 3400);
+  }
+
+  // ===== GITHUB API =====
+  async function initGithub() {
+    const grid = document.getElementById('githubGrid');
+    if (!grid) return;
+    const langColors = { JavaScript:'#f1e05a', Python:'#3572A5', HTML:'#e34c26', CSS:'#563d7c', TypeScript:'#2b7489', Java:'#b07219', 'C++':'#f34b7d', Shell:'#89e051', Dockerfile:'#384d54' };
+    try {
+      const res = await fetch('https://api.github.com/users/Xwin-tex/repos?sort=updated&per_page=6');
+      if (!res.ok) throw new Error('github error');
+      let repos = await res.json();
+      // filter out forks if too many, keep 6
+      repos = repos.filter(r => !r.fork).slice(0,6);
+      if (!repos.length) repos = await (await fetch('https://api.github.com/users/Xwin-tex/repos?per_page=6')).json();
+      grid.innerHTML = '';
+      repos.forEach(r => {
+        const card = document.createElement('article');
+        card.className = 'github-card reveal visible';
+        const langDot = r.language ? `<span class=\"dot-lang\" style=\"background:${langColors[r.language]||'#00d4aa'}\"></span>${r.language}` : '';
+        card.innerHTML = `
+          <h3><a href=\"${r.html_url}\" target=\"_blank\" rel=\"noopener\">${r.name}</a></h3>
+          <p>${r.description ? r.description.slice(0,120) : (currentLang==='en' ? 'No description' : 'Sin descripción')}</p>
+          <div class=\"github-meta\">
+            ${langDot ? `<span>${langDot}</span>` : ''}
+            <span>⭐ ${r.stargazers_count}</span>
+            <span>⑂ ${r.forks_count}</span>
+            <span>${new Date(r.updated_at).toLocaleDateString(currentLang==='en'?'en-US':'es-CO')}</span>
+          </div>`;
+        grid.appendChild(card);
+      });
+    } catch (e) {
+      grid.innerHTML = `<div class=\"github-loading\" style=\"flex-direction:column\"><span>${i18n[currentLang]['github.error']}</span><a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-secondary\" style=\"margin-top:8px\">github.com/Xwin-tex</a></div>`;
+    }
   }
 
   // ===== HERO ENTER trigger =====
@@ -410,61 +520,74 @@
     });
   }
 
-  // ===== CONTACT FORM — FormSubmit (AJAX) =====
+  // ===== CONTACT FORM — validation + toast + FormSubmit =====
   function initContactForm() {
     const form = document.getElementById('contactForm');
     if (!form) return;
     const statusEl = document.getElementById('formStatus');
+    const fields = {
+      name: document.getElementById('name'),
+      email: document.getElementById('email'),
+      subject: document.getElementById('subject'),
+      message: document.getElementById('message')
+    };
+    const errs = {
+      name: document.getElementById('err-name'),
+      email: document.getElementById('err-email'),
+      subject: document.getElementById('err-subject'),
+      message: document.getElementById('err-message')
+    };
+
+    function setErr(input, errEl, msg) {
+      if (msg) {
+        input.classList.add('input-error'); input.classList.remove('input-valid');
+        errEl.textContent = msg; errEl.classList.add('visible');
+      } else {
+        input.classList.remove('input-error'); errEl.textContent = ''; errEl.classList.remove('visible');
+        if (input.value.trim()) input.classList.add('input-valid');
+      }
+    }
+    function validate() {
+      const t = i18n[currentLang].toasts;
+      let ok = true;
+      if (!fields.name.value.trim() || fields.name.value.trim().length < 2) { setErr(fields.name, errs.name, t.required); ok = false; } else setErr(fields.name, errs.name, '');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.value.trim())) { setErr(fields.email, errs.email, t.email); ok = false; } else setErr(fields.email, errs.email, '');
+      if (fields.subject.value.trim().length < 5) { setErr(fields.subject, errs.subject, t.subject); ok = false; } else setErr(fields.subject, errs.subject, '');
+      if (fields.message.value.trim().length < 10) { setErr(fields.message, errs.message, t.message); ok = false; } else setErr(fields.message, errs.message, '');
+      return ok;
+    }
+    Object.values(fields).forEach(inp => {
+      inp.addEventListener('blur', validate);
+      inp.addEventListener('input', () => { if (inp.classList.contains('input-error')) validate(); });
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!validate()) { toast(i18n[currentLang].toasts.required, 'error'); return; }
+      if (form.querySelector('[name="_honey"]')?.value) return;
       const btn = form.querySelector('button[type="submit"]');
       const original = btn.innerHTML;
-
-      // honeypot
-      if (form.querySelector('[name="_honey"]')?.value) return;
-
       btn.disabled = true;
-      btn.innerHTML = '<span>Enviando…</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 0.9s linear infinite"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4"></circle></svg>';
+      btn.innerHTML = `<span>${i18n[currentLang].toasts.sending}</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 0.9s linear infinite"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4"></circle></svg>`;
       if (!document.getElementById('spin-kf')) {
-        const s = document.createElement('style');
-        s.id = 'spin-kf';
-        s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
-        document.head.appendChild(s);
+        const s = document.createElement('style'); s.id='spin-kf'; s.textContent='@keyframes spin{to{transform:rotate(360deg)}}'; document.head.appendChild(s);
       }
-      if (statusEl) { statusEl.textContent = ''; statusEl.style.color = 'var(--fg-subtle)'; }
-
+      if (statusEl) { statusEl.textContent = ''; }
       try {
         const data = new FormData(form);
-        const res = await fetch('https://formsubmit.co/ajax/edwinternera2@gmail.com', {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (!res.ok) throw new Error('Error en el envío');
-
-        btn.innerHTML = '<span>¡Mensaje enviado!</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg>';
+        const res = await fetch('https://formsubmit.co/ajax/edwinternera2@gmail.com', { method:'POST', body:data, headers:{'Accept':'application/json'} });
+        if (!res.ok) throw new Error('send error');
+        btn.innerHTML = `<span>${i18n[currentLang].toasts.sent}</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg>`;
         btn.style.background = 'linear-gradient(135deg,#00d4aa 0%,#00b896 100%)';
-        if (statusEl) {
-          statusEl.textContent = '¡Gracias! Te responderé pronto a tu correo.';
-          statusEl.style.color = 'var(--primary)';
-        }
+        toast(i18n[currentLang].toasts.sent, 'success');
         form.reset();
-
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.innerHTML = original;
-          btn.style.background = '';
-          if (statusEl) statusEl.textContent = '';
-        }, 4000);
-      } catch (err) {
-        btn.disabled = false;
-        btn.innerHTML = original;
-        if (statusEl) {
-          statusEl.textContent = 'No se pudo enviar. Intenta de nuevo o escríbeme a edwinternera2@gmail.com';
-          statusEl.style.color = '#f87171';
-        }
+        Object.values(fields).forEach(i=>i.classList.remove('input-valid','input-error'));
+        Object.values(errs).forEach(e=>{e.textContent=''; e.classList.remove('visible');});
+        setTimeout(()=>{ btn.disabled=false; btn.innerHTML=original; btn.style.background=''; }, 3200);
+      } catch(err) {
+        btn.disabled=false; btn.innerHTML=original;
+        toast(i18n[currentLang].toasts.sendError, 'error');
+        if (statusEl){ statusEl.textContent = currentLang==='en' ? 'Could not send. Email me at edwinternera2@gmail.com' : 'No se pudo enviar. Escríbeme a edwinternera2@gmail.com'; statusEl.style.color='#f87171'; }
       }
     });
   }
@@ -651,6 +774,8 @@
 
   // ===== INIT =====
   function init() {
+    initTheme();
+    initLang();
     initScrollProgress();
     const canvas = document.getElementById('particles-canvas');
     if (canvas) new ParticleSystem(canvas);
@@ -667,6 +792,7 @@
     initMagneticButtons();
     initSkillsRadar();
     initProjectFilters();
+    initGithub();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

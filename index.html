@@ -67,6 +67,7 @@
 </head>
 <body>
   <canvas id="particles-canvas"></canvas>
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
   
   <nav class="nav" id="nav">
     <div class="nav-container">
@@ -75,18 +76,25 @@
         <span class="logo-text">ET</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#inicio" class="nav-link">Inicio</a></li>
-        <li><a href="#sobre-mi" class="nav-link">Sobre mí</a></li>
-        <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
-        <li><a href="#experiencia" class="nav-link">Experiencia</a></li>
-        <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
-        <li><a href="#certificados" class="nav-link">Certificados</a></li>
-        <li><a href="#contacto" class="nav-link">Contacto</a></li>
+        <li><a href="#inicio" class="nav-link" data-i18n="nav.home">Inicio</a></li>
+        <li><a href="#sobre-mi" class="nav-link" data-i18n="nav.about">Sobre mí</a></li>
+        <li><a href="#proyectos" class="nav-link" data-i18n="nav.projects">Proyectos</a></li>
+        <li><a href="#experiencia" class="nav-link" data-i18n="nav.exp">Experiencia</a></li>
+        <li><a href="#habilidades" class="nav-link" data-i18n="nav.skills">Habilidades</a></li>
+        <li><a href="#certificados" class="nav-link" data-i18n="nav.certs">Certificados</a></li>
+        <li><a href="#contacto" class="nav-link" data-i18n="nav.contact">Contacto</a></li>
         <li><a href="assets/Edwin_Ternera_CV.pdf" download class="nav-link nav-link--cta">CV PDF</a></li>
       </ul>
-      <button class="nav-toggle" id="navToggle" aria-label="Menú">
-        <span class="hamburger"></span>
-      </button>
+      <div class="nav-actions">
+        <button class="nav-icon-btn" id="langToggle" aria-label="Cambiar idioma">EN</button>
+        <button class="nav-icon-btn" id="themeToggle" aria-label="Cambiar tema">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menú">
+          <span class="hamburger"></span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -95,7 +103,7 @@
       <div class="hero-bg"></div>
       <div class="hero-content">
         <div class="hero-text reveal">
-          <p class="hero-greeting">Hola, soy</p>
+          <p class="hero-greeting" data-i18n="hero.greeting">Hola, soy</p>
           <h1 class="hero-name">
             <span class="name-first">Edwin</span>
             <span class="name-last">Ternera</span>
@@ -104,23 +112,23 @@
             <span class="typing-text" id="typingText"></span>
             <span class="cursor" aria-hidden="true"></span>
           </div>
-          <p class="hero-description">
+          <p class="hero-description" data-i18n="hero.desc">
             Estudiante de Ingeniería de Software apasionado por crear soluciones tecnológicas.
             Combino desarrollo web, diseño multimedia y soporte técnico con un enfoque proactivo.
           </p>
           <div class="hero-actions">
             <a href="#contacto" class="btn btn-primary">
-              <span>Conectemos</span>
+              <span data-i18n="hero.cta1">Conectemos</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </a>
             <a href="#proyectos" class="btn btn-secondary">
-              <span>Ver Proyectos</span>
+              <span data-i18n="hero.cta2">Ver Proyectos</span>
             </a>
             <a href="assets/Edwin_Ternera_CV.pdf" download class="btn btn-secondary" style="border-color: var(--primary); color: var(--primary);">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v14M5 17l7 5 7-5"/><path d="M4 14v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></svg>
-              <span>Descargar CV</span>
+              <span data-i18n="hero.cta3">Descargar CV</span>
             </a>
           </div>
           <div class="hero-social">
@@ -357,6 +365,22 @@
       </div>
     </section>
 
+    <section id="github" class="section github">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-tag">GitHub</span>
+          <h2 class="section-title">Repos <span class="highlight">en vivo</span></h2>
+          <p style="color:var(--fg-muted);max-width:640px;margin:14px auto 0;line-height:1.6" data-i18n="github.desc">Repositorios públicos de <strong style="color:var(--fg)">@Xwin-tex</strong> cargados directamente desde la API de GitHub — sin editar HTML.</p>
+        </header>
+        <div id="githubGrid" class="github-grid">
+          <div class="github-loading"><span class="loader"></span><span data-i18n="github.loading">Cargando repos…</span></div>
+        </div>
+        <div style="text-align:center;margin-top:24px" class="reveal">
+          <a href="https://github.com/Xwin-tex?tab=repositories" target="_blank" rel="noopener" class="btn btn-secondary" data-i18n="github.viewAll">Ver todo en GitHub →</a>
+        </div>
+      </div>
+    </section>
+
     <section id="experiencia" class="section experience">
       <div class="container">
         <header class="section-header reveal">
@@ -582,20 +606,24 @@
             <input type="text" name="_honey" style="display:none">
             <input type="hidden" name="_autoresponse" value="¡Gracias por escribirme! He recibido tu mensaje y te responderé pronto. - Edwin Ternera">
             <div class="form-group">
-              <label for="name">Nombre</label>
-              <input type="text" id="name" name="name" required placeholder="Tu nombre">
+              <label for="name" data-i18n="form.name">Nombre</label>
+              <input type="text" id="name" name="name" required placeholder="Tu nombre" aria-describedby="err-name" autocomplete="name">
+              <span class="field-error" id="err-name" role="alert"></span>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required placeholder="tu@email.com">
+              <label for="email" data-i18n="form.email">Email</label>
+              <input type="email" id="email" name="email" required placeholder="tu@email.com" aria-describedby="err-email" autocomplete="email">
+              <span class="field-error" id="err-email" role="alert"></span>
             </div>
             <div class="form-group">
-              <label for="subject">Asunto</label>
-              <input type="text" id="subject" name="subject" required placeholder="Asunto del mensaje">
+              <label for="subject" data-i18n="form.subject">Asunto</label>
+              <input type="text" id="subject" name="subject" required placeholder="Asunto del mensaje" aria-describedby="err-subject">
+              <span class="field-error" id="err-subject" role="alert"></span>
             </div>
             <div class="form-group">
-              <label for="message">Mensaje</label>
-              <textarea id="message" name="message" rows="5" required placeholder="Cuéntame sobre tu proyecto..."></textarea>
+              <label for="message" data-i18n="form.message">Mensaje</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Cuéntame sobre tu proyecto..." aria-describedby="err-message"></textarea>
+              <span class="field-error" id="err-message" role="alert"></span>
             </div>
             <button type="submit" class="btn btn-primary btn-full">
               <span>Enviar mensaje</span>
