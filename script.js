@@ -276,6 +276,32 @@
     document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible'));
   }
 
+  // ===== PROJECTS FILTER =====
+  function initProjectFilters() {
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card');
+    if (!btns.length || !cards.length) return;
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        btns.forEach(b => { b.classList.toggle('active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
+        cards.forEach(card => {
+          const cat = card.dataset.category;
+          const show = filter === 'all' || cat === filter;
+          card.style.display = '';
+          // trigger reflow for transition
+          if (show) {
+            card.classList.remove('is-hidden');
+            card.style.removeProperty('display');
+          } else {
+            card.classList.add('is-hidden');
+            setTimeout(() => { if (card.classList.contains('is-hidden')) card.style.display = 'none'; }, 300);
+          }
+        });
+      });
+    });
+  }
+
   // ===== HERO ENTER trigger =====
   function initHeroEnter() {
     const hero = document.querySelector('.hero');
@@ -640,6 +666,7 @@
     initParallax();
     initMagneticButtons();
     initSkillsRadar();
+    initProjectFilters();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

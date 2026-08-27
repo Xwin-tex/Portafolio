@@ -1,0 +1,24 @@
+{
+  "name": "Edwin Ternera — Portafolio",
+  "short_name": "ET Portafolio",
+  "description": "Ingeniero de Software en formación. JavaScript, Python, Node.js, MySQL y diseño multimedia. Santa Marta, Colombia.",
+  "start_url": "/Portafolio/",
+  "scope": "/Portafolio/",
+  "display": "standalone",
+  "background_color": "#0a0f1a",
+  "theme_color": "#00d4aa",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
