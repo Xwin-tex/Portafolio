@@ -398,7 +398,7 @@
     if (!modal) return;
     const data = {
       0: { icon:'🏙️', title: i18n[currentLang]['projects.p1.title'], desc: i18n[currentLang]['projects.p1.desc'] + ' — ' + (currentLang==='en' ? 'Case: urban sensors, real-time dashboard, Node/MySQL backend. Result: 2nd place.' : 'Caso: sensores urbanos, dashboard en tiempo real, backend Node/MySQL. Resultado: 2º lugar.'), tags:['Node.js','MySQL','IoT','Research'], grad:'linear-gradient(135deg,#00d4aa,#6366f1)', links:'<a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Code</a> <span class=\"btn btn-secondary\" style=\"opacity:0.6;pointer-events:none\">Private demo</span>' },
-      1: { icon:'📊', title: i18n[currentLang]['projects.p2.title'], desc: i18n[currentLang]['projects.p2.desc'], tags:['Python','Streamlit','MySQL','Pandas'], grad:'linear-gradient(135deg,#0ea5e9,#00d4aa)', links:'<a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Code</a> <a href=\"#contacto\" class=\"btn btn-secondary\" onclick=\"document.getElementById(\\'projectModal\\').classList.remove(\\'open\\');document.getElementById(\\'contacto\\').scrollIntoView({behavior:\\'smooth\\'})\">'+ (currentLang==='en'?'Request demo':'Solicitar demo') +'</a>' },
+      1: { icon:'📊', title: i18n[currentLang]['projects.p2.title'], desc: i18n[currentLang]['projects.p2.desc'], tags:['Python','Streamlit','MySQL','Pandas'], grad:'linear-gradient(135deg,#0ea5e9,#00d4aa)', links:'<a href="https://github.com/Xwin-tex" target="_blank" rel="noopener" class="btn btn-primary">Code</a> <a href="#contacto" class="btn btn-secondary modal-cta-contact">'+ (currentLang==='en'?'Request demo':'Solicitar demo') +' →</a>' },
       2: { icon:'💻', title: i18n[currentLang]['projects.p3.title'], desc: i18n[currentLang]['projects.p3.desc'], tags:['HTML5','CSS3','JavaScript','Canvas'], grad:'linear-gradient(135deg,#6366f1,#a78bfa)', links:'<a href=\"https://github.com/Xwin-tex/Portafolio\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Code</a> <a href=\"#inicio\" class=\"btn btn-secondary\">Live</a>' },
       3: { icon:'🔧', title: i18n[currentLang]['projects.p4.title'], desc: i18n[currentLang]['projects.p4.desc'], tags:['Windows','Support','Networking','Docs'], grad:'linear-gradient(135deg,#f59e0b,#ef4444)', links:'<a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Guides</a>' },
       4: { icon:'🎨', title: i18n[currentLang]['projects.p5.title'], desc: i18n[currentLang]['projects.p5.desc'], tags:['Photoshop','Illustrator','Premiere','After Effects'], grad:'linear-gradient(135deg,#ec4899,#8b5cf6)', links:'<a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Works</a>' },
@@ -412,8 +412,9 @@
       d.desc = i18n[currentLang][`projects.p${idx+1}.desc`] || d.desc;
       iconEl.textContent = d.icon; titleEl.textContent = d.title; descEl.textContent = d.desc;
       headEl.style.background = d.grad;
-      tagsEl.innerHTML = d.tags.map(t=>`<span class=\"skill-tag\" style=\"background:rgba(255,255,255,0.08)\">${t}</span>`).join('');
+      tagsEl.innerHTML = d.tags.map(t=>`<span class="skill-tag" style="background:rgba(255,255,255,0.08)">${t}</span>`).join('');
       linksEl.innerHTML = d.links;
+      linksEl.querySelector('.modal-cta-contact')?.addEventListener('click', ()=>{ close(); setTimeout(()=>document.getElementById('contacto')?.scrollIntoView({behavior:'smooth'}), 120); });
       modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
     }
     function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }

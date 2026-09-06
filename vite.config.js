@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/Portafolio/',
+  // Vercel sirve en /, GitHub Pages en /Portafolio/
+  base: process.env.VERCEL ? '/' : '/Portafolio/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets'
