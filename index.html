@@ -594,73 +594,48 @@
           <span class="section-tag" data-i18n="contact.tag">Hablemos</span>
           <h2 class="section-title" data-i18n="contact.title">Contacto</h2>
         </header>
-        <div class="contact-grid">
-          <div class="contact-info reveal">
-            <h3 data-i18n="contact.h3">¿Tienes un proyecto en mente?</h3>
-            <p data-i18n="contact.p">Estoy abierto a oportunidades de prácticas, colaboraciones o proyectos freelance. 
-               No dudes en escribirme.</p>
-            <div class="contact-items">
+        <div style="max-width:720px;margin:0 auto" class="reveal">
+          <div class="contact-info" style="text-align:center">
+            <h3 data-i18n="contact.h3" style="text-align:center">¿Tienes un proyecto en mente?</h3>
+            <p data-i18n="contact.p" style="text-align:center;max-width:600px;margin:0 auto 28px">Estoy abierto a oportunidades de prácticas, colaboraciones o proyectos freelance. No dudes en escribirme.</p>
+            <div class="contact-items" style="max-width:520px;margin:0 auto">
               <a href="mailto:edwinternera2@gmail.com" class="contact-item">
                 <div class="contact-icon">✉️</div>
-                <div>
+                <div style="text-align:left">
                   <span class="contact-label">Email</span>
                   <span class="contact-value">edwinternera2@gmail.com</span>
                 </div>
               </a>
-              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:2px">
+              <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:4px 0 6px">
                 <button type="button" class="copy-email" id="copyEmailBtn" data-i18n="contact.copy">Copiar email</button>
-                <a href="https://calendly.com/" target="_blank" rel="noopener" class="copy-email" style="text-decoration:none" data-i18n="contact.calendly">Agendar en Calendly →</a>
+                <a href="https://wa.me/573126033059?text=Hola%20Edwin%2C%20vi%20tu%20portafolio%20y%20quiero%20conversar" target="_blank" rel="noopener" class="btn btn-primary" style="border-radius:100px;padding:8px 18px;font-size:0.85rem">
+                  <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor" aria-hidden="true" style="margin-right:6px"><path d="M16 3C8.82 3 3 8.02 3 14.93c0 2.1.6 4.15 1.73 5.93L3 29l8.38-2.2A12.86 12.86 0 0016 28.86C23.18 28.86 29 23.66 29 16.73 29 8.02 23.18 3 16 3z"/></svg>
+                  <span data-i18n="contact.whatsapp">Hablar por WhatsApp</span>
+                </a>
               </div>
               <a href="tel:+573126033059" class="contact-item">
                 <div class="contact-icon">📱</div>
-                <div>
+                <div style="text-align:left">
                   <span class="contact-label">Teléfono</span>
                   <span class="contact-value">+57 312 603 3059</span>
                 </div>
               </a>
               <div class="contact-item">
                 <div class="contact-icon">📍</div>
-                <div>
+                <div style="text-align:left">
                   <span class="contact-label">Ubicación</span>
                   <span class="contact-value">Santa Marta, Colombia</span>
                 </div>
               </div>
+              <div class="contact-item">
+                <div class="contact-icon">🔗</div>
+                <div style="text-align:left">
+                  <span class="contact-label">GitHub / LinkedIn</span>
+                  <span class="contact-value"><a href="https://github.com/Xwin-tex" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:none">github.com/Xwin-tex</a> · <a href="https://www.linkedin.com/in/edwin-ternera-699399164/" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:none">LinkedIn</a></span>
+                </div>
+              </div>
             </div>
           </div>
-          <form class="contact-form reveal" id="contactForm" action="https://formsubmit.co/edwinternera2@gmail.com" method="POST">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portafolio">
-            <input type="text" name="_honey" style="display:none">
-            <input type="hidden" name="_autoresponse" value="¡Gracias por escribirme! He recibido tu mensaje y te responderé pronto. - Edwin Ternera">
-            <div class="form-group">
-              <label for="name" data-i18n="form.name">Nombre</label>
-              <input type="text" id="name" name="name" required placeholder="Tu nombre" aria-describedby="err-name" autocomplete="name" maxlength="80">
-              <span class="field-error" id="err-name" role="alert"></span>
-            </div>
-            <div class="form-group">
-              <label for="email" data-i18n="form.email">Email</label>
-              <input type="email" id="email" name="email" required placeholder="tu@email.com" aria-describedby="err-email" autocomplete="email" maxlength="120">
-              <span class="field-error" id="err-email" role="alert"></span>
-            </div>
-            <div class="form-group">
-              <label for="subject" data-i18n="form.subject">Asunto</label>
-              <input type="text" id="subject" name="subject" required placeholder="Asunto del mensaje" aria-describedby="err-subject" maxlength="120">
-              <span class="field-error" id="err-subject" role="alert"></span>
-            </div>
-            <div class="form-group">
-              <label for="message" data-i18n="form.message">Mensaje</label>
-              <textarea id="message" name="message" rows="5" required placeholder="Cuéntame sobre tu proyecto..." aria-describedby="err-message" maxlength="1000"></textarea>
-              <span class="field-error" id="err-message" role="alert"></span>
-            </div>
-            <button type="submit" class="btn btn-primary btn-full">
-              <span>Enviar mensaje</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </button>
-            <p id="formStatus" style="margin-top:12px;font-size:0.82rem;text-align:center;line-height:1.5;min-height:1.2em"></p>
-           </form>
         </div>
       </div>
     </section>
