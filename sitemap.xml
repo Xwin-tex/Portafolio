@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://xwin-tex.github.io/Portafolio/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://xwin-tex.github.io/Portafolio/#sobre-mi</loc><priority>0.8</priority></url>
+  <url><loc>https://xwin-tex.github.io/Portafolio/#proyectos</loc><priority>0.9</priority></url>
+  <url><loc>https://xwin-tex.github.io/Portafolio/#experiencia</loc><priority>0.7</priority></url>
+  <url><loc>https://xwin-tex.github.io/Portafolio/#habilidades</loc><priority>0.7</priority></url>
+  <url><loc>https://xwin-tex.github.io/Portafolio/#certificados</loc><priority>0.6</priority></url>
+  <url><loc>https://xwin-tex.github.io/Portafolio/#contacto</loc><priority>0.8</priority></url>
+  <url><loc>https://xwin-tex.github.io/Portafolio/assets/Edwin_Ternera_CV.pdf</loc><priority>0.5</priority></url>
+</urlset>

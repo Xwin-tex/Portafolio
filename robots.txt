@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xwin-tex.github.io/Portafolio/sitemap.xml

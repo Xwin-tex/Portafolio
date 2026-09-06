@@ -1,0 +1,19 @@
+{
+  "name": "portafolio-edwin-ternera",
+  "version": "1.0.0",
+  "description": "Portafolio Edwin Ternera — Ingeniero de Software en formación. https://xwin-tex.github.io/Portafolio/",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.html",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.3.0"
+  }
+}

@@ -30,7 +30,14 @@
       'skills.title': 'Habilidades <span class="highlight">Técnicas</span>', 'skills.cat1': 'Desarrollo & Backend', 'skills.cat2': 'Frontend & Web', 'skills.cat3': 'Soporte & Sistemas', 'skills.cat4': 'Diseño & Multimedia', 'skills.cat5': 'Ofimática & Gestión', 'skills.cat6': 'Idiomas & Soft Skills',
       'certs.tag': 'Validados', 'certs.title': 'Certificados <span class="highlight">Destacados</span>',
       'edu.tag': 'Académica', 'edu.title': 'Formación <span class="highlight">Académica</span>',
+      'testimonials.tag': 'Confianza', 'testimonials.title': 'Lo que dicen <span class="highlight">de mí</span>',
+      'testimonials.t1.text': '“Edwin optimizó nuestros procesos documentales y mejoró la entrega a tiempo en un 78%. Muy proactivo y organizado.”',
+      'testimonials.t1.role': 'Equipo de Proyectos · 2023',
+      'testimonials.t2.text': '“Como Trial Manager en Kodland, Edwin acompañó a cada estudiante con paciencia y resolvió dudas técnicas al instante.”',
+      'testimonials.t2.role': 'Coordinación Académica · 2024-2025',
+      'testimonials.t3.text': '“Su prototipo SMART_CITY destacó por viabilidad e innovación. Merecido 2º lugar en el Rally.”',
       'contact.tag': 'Hablemos', 'contact.title': 'Contacto', 'contact.h3': '¿Tienes un proyecto en mente?', 'contact.p': 'Estoy abierto a oportunidades de prácticas, colaboraciones o proyectos freelance. No dudes en escribirme.',
+      'contact.copy': 'Copiar email', 'contact.copied': '¡Copiado!', 'contact.calendly': 'Agendar en Calendly →',
       'github.desc': 'Repositorios públicos de @Xwin-tex cargados directamente desde la API de GitHub — sin editar HTML.',
       'github.loading': 'Cargando repos…', 'github.viewAll': 'Ver todo en GitHub →', 'github.error': 'No se pudieron cargar los repos. Ver en GitHub.',
       'form.name': 'Nombre', 'form.email': 'Email', 'form.subject': 'Asunto', 'form.message': 'Mensaje',
@@ -62,7 +69,14 @@
       'skills.title': 'Technical <span class="highlight">Skills</span>', 'skills.cat1': 'Development & Backend', 'skills.cat2': 'Frontend & Web', 'skills.cat3': 'Support & Systems', 'skills.cat4': 'Design & Multimedia', 'skills.cat5': 'Office & Management', 'skills.cat6': 'Languages & Soft Skills',
       'certs.tag': 'Validated', 'certs.title': 'Featured <span class="highlight">Certificates</span>',
       'edu.tag': 'Academic', 'edu.title': 'Academic <span class="highlight">Background</span>',
+      'testimonials.tag': 'Trust', 'testimonials.title': 'What they say <span class="highlight">about me</span>',
+      'testimonials.t1.text': '“Edwin optimized our document processes and improved on-time delivery to 78%. Very proactive and organized.”',
+      'testimonials.t1.role': 'Project Team · 2023',
+      'testimonials.t2.text': '“As Trial Manager at Kodland, Edwin supported each student patiently and solved tech doubts instantly.”',
+      'testimonials.t2.role': 'Academic Coordination · 2024-2025',
+      'testimonials.t3.text': '“His SMART_CITY prototype stood out for feasibility and innovation. Well-deserved 2nd place.”',
       'contact.tag': "Let's talk", 'contact.title': 'Contact', 'contact.h3': 'Have a project in mind?', 'contact.p': 'I am open to internships, collaborations or freelance projects. Feel free to reach out.',
+      'contact.copy': 'Copy email', 'contact.copied': 'Copied!', 'contact.calendly': 'Schedule on Calendly →',
       'github.desc': 'Public repositories from @Xwin-tex loaded live from GitHub API — no HTML edits needed.',
       'github.loading': 'Loading repos…', 'github.viewAll': 'View all on GitHub →', 'github.error': 'Could not load repos. View on GitHub.',
       'form.name': 'Name', 'form.email': 'Email', 'form.subject': 'Subject', 'form.message': 'Message',
@@ -340,29 +354,85 @@
     document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible'));
   }
 
-  // ===== PROJECTS FILTER =====
+  // ===== PROJECTS FILTER — FLIP (no display:none flash) =====
   function initProjectFilters() {
     const btns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.project-card');
+    const grid = document.querySelector('.projects-grid');
     if (!btns.length || !cards.length) return;
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         const filter = btn.dataset.filter;
         btns.forEach(b => { b.classList.toggle('active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
+        // FLIP: fade+scale, keep layout stable
         cards.forEach(card => {
-          const cat = card.dataset.category;
-          const show = filter === 'all' || cat === filter;
-          card.style.display = '';
-          // trigger reflow for transition
+          const show = filter === 'all' || card.dataset.category === filter;
+          card.style.transition = 'opacity 320ms cubic-bezier(0.25,1,0.5,1), transform 420ms cubic-bezier(0.16,1,0.3,1)';
           if (show) {
             card.classList.remove('is-hidden');
-            card.style.removeProperty('display');
+            card.style.display = '';
+            requestAnimationFrame(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; });
           } else {
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.96)';
             card.classList.add('is-hidden');
-            setTimeout(() => { if (card.classList.contains('is-hidden')) card.style.display = 'none'; }, 300);
+            setTimeout(() => { if (card.classList.contains('is-hidden')) { card.style.display='none'; } }, 340);
           }
         });
+        if (grid) { grid.style.opacity='0.6'; setTimeout(()=>grid.style.opacity='1', 220); }
       });
+    });
+  }
+
+  // ===== PROJECT MODAL =====
+  function initProjectModal() {
+    const modal = document.getElementById('projectModal');
+    const backdrop = document.getElementById('modalBackdrop');
+    const closeBtn = document.getElementById('modalClose');
+    const titleEl = document.getElementById('modalTitle');
+    const descEl = document.getElementById('modalDesc');
+    const tagsEl = document.getElementById('modalTags');
+    const linksEl = document.getElementById('modalLinks');
+    const headEl = document.getElementById('modalHead');
+    const iconEl = document.getElementById('modalIcon');
+    if (!modal) return;
+    const data = {
+      0: { icon:'🏙️', title: i18n[currentLang]['projects.p1.title'], desc: i18n[currentLang]['projects.p1.desc'] + ' — ' + (currentLang==='en' ? 'Case: urban sensors, real-time dashboard, Node/MySQL backend. Result: 2nd place.' : 'Caso: sensores urbanos, dashboard en tiempo real, backend Node/MySQL. Resultado: 2º lugar.'), tags:['Node.js','MySQL','IoT','Research'], grad:'linear-gradient(135deg,#00d4aa,#6366f1)', links:'<a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Code</a> <span class=\"btn btn-secondary\" style=\"opacity:0.6;pointer-events:none\">Private demo</span>' },
+      1: { icon:'📊', title: i18n[currentLang]['projects.p2.title'], desc: i18n[currentLang]['projects.p2.desc'], tags:['Python','Streamlit','MySQL','Pandas'], grad:'linear-gradient(135deg,#0ea5e9,#00d4aa)', links:'<a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Code</a> <a href=\"#contacto\" class=\"btn btn-secondary\" onclick=\"document.getElementById(\\'projectModal\\').classList.remove(\\'open\\');document.getElementById(\\'contacto\\').scrollIntoView({behavior:\\'smooth\\'})\">'+ (currentLang==='en'?'Request demo':'Solicitar demo') +'</a>' },
+      2: { icon:'💻', title: i18n[currentLang]['projects.p3.title'], desc: i18n[currentLang]['projects.p3.desc'], tags:['HTML5','CSS3','JavaScript','Canvas'], grad:'linear-gradient(135deg,#6366f1,#a78bfa)', links:'<a href=\"https://github.com/Xwin-tex/Portafolio\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Code</a> <a href=\"#inicio\" class=\"btn btn-secondary\">Live</a>' },
+      3: { icon:'🔧', title: i18n[currentLang]['projects.p4.title'], desc: i18n[currentLang]['projects.p4.desc'], tags:['Windows','Support','Networking','Docs'], grad:'linear-gradient(135deg,#f59e0b,#ef4444)', links:'<a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Guides</a>' },
+      4: { icon:'🎨', title: i18n[currentLang]['projects.p5.title'], desc: i18n[currentLang]['projects.p5.desc'], tags:['Photoshop','Illustrator','Premiere','After Effects'], grad:'linear-gradient(135deg,#ec4899,#8b5cf6)', links:'<a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\">Works</a>' },
+      5: { icon:'🗂️', title: i18n[currentLang]['projects.p6.title'], desc: i18n[currentLang]['projects.p6.desc'], tags:['Excel','Management','Reports','Processes'], grad:'linear-gradient(135deg,#14b8a6,#0ea5e9)', links:'<span class=\"btn btn-secondary\" style=\"opacity:0.6\">Internal</span>' }
+    };
+    function open(idx) {
+      const d = data[idx];
+      if (!d) return;
+      // refresh title/desc with current lang
+      d.title = i18n[currentLang][`projects.p${idx+1}.title`] || d.title;
+      d.desc = i18n[currentLang][`projects.p${idx+1}.desc`] || d.desc;
+      iconEl.textContent = d.icon; titleEl.textContent = d.title; descEl.textContent = d.desc;
+      headEl.style.background = d.grad;
+      tagsEl.innerHTML = d.tags.map(t=>`<span class=\"skill-tag\" style=\"background:rgba(255,255,255,0.08)\">${t}</span>`).join('');
+      linksEl.innerHTML = d.links;
+      modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+    }
+    function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    document.querySelectorAll('.project-card').forEach((card, i) => {
+      card.style.cursor='pointer';
+      card.addEventListener('click', () => open(i));
+      card.setAttribute('role','button'); card.setAttribute('tabindex','0');
+      card.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); open(i); } });
+    });
+    backdrop?.addEventListener('click', close);
+    closeBtn?.addEventListener('click', close);
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
+  }
+
+  function initCopyEmail() {
+    const btn = document.getElementById('copyEmailBtn');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText('edwinternera2@gmail.com'); toast(i18n[currentLang]['contact.copied'] || 'Copied!', 'success'); btn.textContent = i18n[currentLang]['contact.copied']; setTimeout(()=> btn.textContent = i18n[currentLang]['contact.copy'], 1800); } catch { window.location.href='mailto:edwinternera2@gmail.com'; }
     });
   }
 
@@ -371,7 +441,8 @@
     const btn = document.getElementById('themeToggle');
     if (!btn) return;
     const saved = localStorage.getItem('theme');
-    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const mql = window.matchMedia('(prefers-color-scheme: light)');
+    const prefersLight = mql.matches;
     const initial = saved || (prefersLight ? 'light' : 'dark');
     document.documentElement.setAttribute('data-theme', initial);
     document.querySelector('meta[name=\"theme-color\"]')?.setAttribute('content', initial === 'light' ? '#f8fafc' : '#0a0f1a');
@@ -381,6 +452,14 @@
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       document.querySelector('meta[name=\"theme-color\"]')?.setAttribute('content', next === 'light' ? '#f8fafc' : '#0a0f1a');
+    });
+    // sync if user changes system theme and has no explicit saved preference
+    mql.addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        const next = e.matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        document.querySelector('meta[name=\"theme-color\"]')?.setAttribute('content', next === 'light' ? '#f8fafc' : '#0a0f1a');
+      }
     });
   }
 
@@ -393,7 +472,9 @@
       typingTexts = i18n[lang].typing;
       localStorage.setItem('lang', lang);
       document.documentElement.lang = lang;
+      document.querySelector('meta[property="og:locale"]')?.setAttribute('content', lang === 'en' ? 'en_US' : 'es_CO');
       btn.textContent = lang === 'es' ? 'EN' : 'ES';
+      btn.setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Cambiar a español');
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const val = i18n[lang][key];
@@ -425,27 +506,23 @@
     setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 320); }, 3400);
   }
 
-  // ===== GITHUB API =====
+  // ===== GITHUB API — cached =====
   async function initGithub() {
     const grid = document.getElementById('githubGrid');
     if (!grid) return;
     const langColors = { JavaScript:'#f1e05a', Python:'#3572A5', HTML:'#e34c26', CSS:'#563d7c', TypeScript:'#2b7489', Java:'#b07219', 'C++':'#f34b7d', Shell:'#89e051', Dockerfile:'#384d54' };
-    try {
-      const res = await fetch('https://api.github.com/users/Xwin-tex/repos?sort=updated&per_page=6');
-      if (!res.ok) throw new Error('github error');
-      let repos = await res.json();
-      // filter out forks if too many, keep 6
-      repos = repos.filter(r => !r.fork).slice(0,6);
-      if (!repos.length) repos = await (await fetch('https://api.github.com/users/Xwin-tex/repos?per_page=6')).json();
+    const cacheKey = 'github_cache_Xwin-tex';
+    const cacheTTL = 10 * 60 * 1000; // 10 min
+    function renderRepos(repos) {
       grid.innerHTML = '';
       repos.forEach(r => {
         const card = document.createElement('article');
         card.className = 'github-card reveal visible';
-        const langDot = r.language ? `<span class=\"dot-lang\" style=\"background:${langColors[r.language]||'#00d4aa'}\"></span>${r.language}` : '';
+        const langDot = r.language ? `<span class="dot-lang" style="background:${langColors[r.language]||'#00d4aa'}"></span>${r.language}` : '';
         card.innerHTML = `
-          <h3><a href=\"${r.html_url}\" target=\"_blank\" rel=\"noopener\">${r.name}</a></h3>
-          <p>${r.description ? r.description.slice(0,120) : (currentLang==='en' ? 'No description' : 'Sin descripción')}</p>
-          <div class=\"github-meta\">
+          <h3><a href="${r.html_url}" target="_blank" rel="noopener">${r.name}</a></h3>
+          <p>${r.description ? r.description.slice(0,140) : (currentLang==='en' ? 'No description' : 'Sin descripción')}</p>
+          <div class="github-meta">
             ${langDot ? `<span>${langDot}</span>` : ''}
             <span>⭐ ${r.stargazers_count}</span>
             <span>⑂ ${r.forks_count}</span>
@@ -453,8 +530,34 @@
           </div>`;
         grid.appendChild(card);
       });
+    }
+    // try cache
+    try {
+      const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
+      if (cached && Date.now() - cached.t < cacheTTL && Array.isArray(cached.data) && cached.data.length) {
+        renderRepos(cached.data);
+        return;
+      }
+    } catch {}
+    // also try localStorage fallback if rate-limited
+    try {
+      const res = await fetch('https://api.github.com/users/Xwin-tex/repos?sort=updated&per_page=12');
+      if (!res.ok) throw new Error('github error ' + res.status);
+      let repos = await res.json();
+      repos = repos.filter(r => !r.fork);
+      if (!repos.length) repos = await (await fetch('https://api.github.com/users/Xwin-tex/repos?per_page=6')).json();
+      repos = repos.slice(0,6);
+      // sanitize before cache
+      const toCache = repos.map(r => ({ name:r.name, description:r.description, language:r.language, stargazers_count:r.stargazers_count, forks_count:r.forks_count, updated_at:r.updated_at, html_url:r.html_url, fork:r.fork }));
+      try { sessionStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), data: toCache })); localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), data: toCache })); } catch {}
+      renderRepos(toCache);
     } catch (e) {
-      grid.innerHTML = `<div class=\"github-loading\" style=\"flex-direction:column\"><span>${i18n[currentLang]['github.error']}</span><a href=\"https://github.com/Xwin-tex\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-secondary\" style=\"margin-top:8px\">github.com/Xwin-tex</a></div>`;
+      // fallback to localStorage cache
+      try {
+        const fallback = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+        if (fallback && fallback.data) { renderRepos(fallback.data); return; }
+      } catch {}
+      grid.innerHTML = `<div class="github-loading" style="flex-direction:column"><span>${i18n[currentLang]['github.error']}</span><a href="https://github.com/Xwin-tex" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top:8px">github.com/Xwin-tex</a></div>`;
     }
   }
 
@@ -512,22 +615,47 @@
     onScroll();
   }
 
-  // ===== MOBILE MENU — spring feel =====
+  // ===== MOBILE MENU — spring feel + a11y =====
   function initMobileMenu() {
     const toggle = document.getElementById('navToggle');
     const links = document.querySelector('.nav-links');
     if (!toggle || !links) return;
+    const focusable = () => Array.from(links.querySelectorAll('a, button')).filter(el => !el.hasAttribute('hidden'));
+    function close() {
+      toggle.classList.remove('active');
+      links.classList.remove('open');
+      document.body.style.overflow = '';
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    function open() {
+      links.classList.add('open');
+      toggle.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      toggle.setAttribute('aria-expanded', 'true');
+      focusable()[0]?.focus();
+    }
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'nav-links');
+    links.id = 'nav-links';
     toggle.addEventListener('click', () => {
-      const open = links.classList.toggle('open');
-      toggle.classList.toggle('active', open);
-      document.body.style.overflow = open ? 'hidden' : '';
+      const isOpen = links.classList.contains('open');
+      if (isOpen) close(); else open();
     });
     links.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        toggle.classList.remove('active');
-        links.classList.remove('open');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && links.classList.contains('open')) close();
+      if (e.key === 'Tab' && links.classList.contains('open')) {
+        const els = focusable();
+        if (!els.length) return;
+        const first = els[0], last = els[els.length-1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (links.classList.contains('open') && !links.contains(e.target) && !toggle.contains(e.target)) close();
     });
   }
 
@@ -540,7 +668,9 @@
         if (entry.isIntersecting) {
           const id = entry.target.getAttribute('id');
           navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            const isActive = link.getAttribute('href') === `#${id}`;
+            link.classList.toggle('active', isActive);
+            if (isActive) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
           });
         }
       });
@@ -811,6 +941,30 @@
     }, { threshold: 0.35 });
     io.observe(canvas);
 
+    // tooltip
+    const tip = document.createElement('div');
+    tip.style.cssText = 'position:absolute;background:var(--bg-card);border:1px solid var(--border);padding:6px 10px;border-radius:8px;font-size:0.78rem;font-weight:600;pointer-events:none;opacity:0;transform:translate(-50%,-120%);transition:opacity 120ms;box-shadow:0 8px 20px rgba(0,0,0,0.25);white-space:nowrap';
+    canvas.parentElement.style.position='relative';
+    canvas.parentElement.appendChild(tip);
+    canvas.addEventListener('mousemove', (e)=>{
+      const rect = canvas.getBoundingClientRect();
+      // map to 400x400 coordinate (canvas style 400px)
+      const x = (e.clientX - rect.left) * (400 / rect.width);
+      const y = (e.clientY - rect.top) * (400 / rect.height);
+      const step = (Math.PI*2)/skills.length;
+      let closest = null, minD=18;
+      skills.forEach((s,i)=>{
+        const a = i*step - Math.PI/2;
+        const r = (s.value/100)*maxR * progress;
+        const px = cx + Math.cos(a)*r, py = cy + Math.sin(a)*r;
+        const d = Math.hypot(x-px, y-py);
+        if (d < minD) { minD=d; closest=s; }
+      });
+      if (closest) { tip.textContent = `${closest.label}: ${closest.value}%`; tip.style.left = e.clientX - rect.left + 'px'; tip.style.top = e.clientY - rect.top + 'px'; tip.style.opacity='1'; }
+      else tip.style.opacity='0';
+    });
+    canvas.addEventListener('mouseleave', ()=> tip.style.opacity='0');
+
     let t;
     window.addEventListener('resize', () => {
       clearTimeout(t);
@@ -838,6 +992,8 @@
     initMagneticButtons();
     initSkillsRadar();
     initProjectFilters();
+    initProjectModal();
+    initCopyEmail();
     initGithub();
   }
 
